@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace Whatsapp_Clone_api.Controllers
 {
-    // [Authorize]
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/contacts")]
     [ApiController]
     public class ContactsController : ControllerBase
@@ -22,6 +22,7 @@ namespace Whatsapp_Clone_api.Controllers
         }
 
         // GET: api/contacts
+        //
         [HttpGet]
         public ActionResult<List<Chat>> GetContacts()
         {
@@ -34,7 +35,7 @@ namespace Whatsapp_Clone_api.Controllers
         }
         //POST: api/contacts
         [HttpPost]
-        public IActionResult AddContact([Bind("Id,Name,Server,Last,LastDate")] Chat chat)
+        public IActionResult AddContact([Bind("Id,Name,Server")] Chat chat)
         {
             if (ModelState.IsValid)
             {
