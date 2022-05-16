@@ -14,6 +14,7 @@ namespace Services
         public UserService(List<User> users)
         {
             _users = users;
+            //delete Meeeeeeee
             if (_users.Count == 0)
             {
                 User user = new User() { Username = "Lion", Nickname = "lio", Password = "123456789L!" };
