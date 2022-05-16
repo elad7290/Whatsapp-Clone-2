@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Services;
 
 namespace Whatsapp_Clone_api.Controllers
 {
@@ -11,14 +12,13 @@ namespace Whatsapp_Clone_api.Controllers
     [ApiController]
     public class ContactsController : ControllerBase
     {
-        private User _user;
 
-        public ContactsController()
+        private UserService _service;
+
+
+        public ContactsController(UserService service)
         {
-            if (_user == null)
-            {
-                _user = new User() { Username = "Lion", Nickname = "lio", Password = "123456789L!" };
-            }
+            _service = service;
         }
 
         // GET: api/contacts
@@ -26,24 +26,23 @@ namespace Whatsapp_Clone_api.Controllers
         [HttpGet]
         public ActionResult<List<Chat>> GetContacts()
         {
-            if (_user == null)
-            {
-                return BadRequest(); // NotFound??
-            }
-            return Ok(_user.ActiveChats);
+            var username = GetUserId();
+            if(username == null) { return BadRequest(); }
+            var chats= _service.GetChars(username);
+            if(chats == null) { return BadRequest(); }
+            return Ok(chats);
 
         }
-        //POST: api/contacts
-        [HttpPost]
-        public IActionResult AddContact([Bind("Id,Name,Server")] Chat chat)
+
+
+        private string? GetUserId()
         {
-            if (ModelState.IsValid)
+            var token = User.Claims.FirstOrDefault(x => x.Type.ToString().Equals("UserId"));
+            if(token == null)
             {
-                _user.ActiveChats.Add(chat);
-                return CreatedAtAction(nameof(GetContacts), chat);
+                return null;
             }
-            return BadRequest();
-            
+            return token.Value;
         }
 
 

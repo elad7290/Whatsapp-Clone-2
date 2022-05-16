@@ -15,6 +15,7 @@ namespace Whatsapp_Clone_api.Controllers
         public IConfiguration _configuration;
         private UserService _service;
 
+
         public LoginController(IConfiguration configuration,UserService service)
         {
             _configuration = configuration;
@@ -42,7 +43,7 @@ namespace Whatsapp_Clone_api.Controllers
                     expires: DateTime.UtcNow.AddMinutes(20),
                     signingCredentials: mac);
 
-                //await _service.setUser(username);
+               
                 return Ok(new JwtSecurityTokenHandler().WriteToken(token));
             }
             else

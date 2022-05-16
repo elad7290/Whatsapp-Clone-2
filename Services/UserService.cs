@@ -63,6 +63,13 @@ namespace Services
         {
             return _users.FirstOrDefault(u => u.Username == username && u.Password==password) != null;
         }
+
+        public List<Chat>? GetChars(string username)
+        {
+            User? user = Get(username);
+            if(user == null) { return null; }
+            return user.ActiveChats;
+        }
     }
 }
 
