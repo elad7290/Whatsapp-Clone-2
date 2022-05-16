@@ -32,5 +32,19 @@ namespace Whatsapp_Clone_api.Controllers
             return Ok(_user.ActiveChats);
 
         }
+        //POST: api/contacts
+        [HttpPost]
+        public IActionResult AddContact([Bind("Id,Name,Server,Last,LastDate")] Chat chat)
+        {
+            if (ModelState.IsValid)
+            {
+                _user.ActiveChats.Add(chat);
+                return CreatedAtAction(nameof(GetContacts), chat);
+            }
+            return BadRequest();
+            
+        }
+
+
     }
 }
