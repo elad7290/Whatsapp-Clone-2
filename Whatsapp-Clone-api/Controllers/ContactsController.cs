@@ -45,6 +45,17 @@ namespace Whatsapp_Clone_api.Controllers
             return token.Value;
         }
 
+        // POST: api/contacts
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create()
+        {
+            return Ok();
+        }
+
+
+
+
 
     }
 }
