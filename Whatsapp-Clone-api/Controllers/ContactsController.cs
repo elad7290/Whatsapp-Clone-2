@@ -53,7 +53,7 @@ namespace Whatsapp_Clone_api.Controllers
             {
                 if (_service.ChatExist(userId, chat.Id)) { return Conflict(); }
                 _service.AddChat(userId, chat);
-                return CreatedAtAction("GetContacts", chat);
+                return CreatedAtAction(nameof(AddChat), chat);
 
             }
             return BadRequest();
@@ -119,8 +119,11 @@ namespace Whatsapp_Clone_api.Controllers
             if (userId == null) { return BadRequest(); }
             if (ModelState.IsValid)
             {
-                _service.AddMessage(userId, id, message);
-                return CreatedAtAction("GetMessages", message);
+                if (_service.ChatExist(userId, id))
+                {
+                    _service.AddMessage(userId, id, message);
+                    return CreatedAtAction(nameof(AddMessage), message);
+                }
 
             }
             return BadRequest();
