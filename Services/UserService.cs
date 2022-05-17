@@ -17,7 +17,7 @@ namespace Services
             //delete Meeeeeeee
             if (_users.Count == 0)
             {
-                User user = new User() { Username = "Lion", Nickname = "lio", Password = "123456789L!" };
+                User user = new User() { Username = "Lion", Nickname = "lio", Password = "1" };
                 _users.Add(user); 
             }
                     
@@ -25,6 +25,28 @@ namespace Services
         public void Add(User user)
         {
             _users.Add(user);
+        }
+        public void AddChat(string username,Chat chat)
+        {
+            var user = Get(username);
+            if (user == null) { return; }
+
+            user.ActiveChats.Add(chat);
+        }
+
+        public Chat? GetChat(string username,string id)
+        {
+            var chats=GetChats(username);
+            if (chats == null) { return null; }
+            Chat? chat =chats.Where(c => c.Id == id).FirstOrDefault();
+            if (chat == null) { return null; }
+            return chat;
+
+        }
+
+        public bool ChatExist(string username, string id)
+        {
+            return GetChat(username, id) != null;
         }
 
         public void Delete(string username)
@@ -64,7 +86,7 @@ namespace Services
             return _users.FirstOrDefault(u => u.Username == username && u.Password==password) != null;
         }
 
-        public List<Chat>? GetChars(string username)
+        public List<Chat>? GetChats(string username)
         {
             User? user = Get(username);
             if(user == null) { return null; }

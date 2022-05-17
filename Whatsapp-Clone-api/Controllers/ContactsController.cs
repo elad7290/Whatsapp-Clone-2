@@ -28,7 +28,7 @@ namespace Whatsapp_Clone_api.Controllers
         {
             var username = GetUserId();
             if(username == null) { return BadRequest(); }
-            var chats= _service.GetChars(username);
+            var chats= _service.GetChats(username);
             if(chats == null) { return BadRequest(); }
             return Ok(chats);
 
@@ -49,7 +49,17 @@ namespace Whatsapp_Clone_api.Controllers
         [HttpPost]
         public ActionResult Create([Bind("Id,Name,Server,Last,LastDate")] Chat chat)
         {
-            return Ok(chat);
+            var userId = GetUserId();
+            if(userId == null) { return BadRequest(); }
+            if (ModelState.IsValid)
+            {
+                if (_service.ChatExist(userId, chat.Id)) { return Conflict(); }
+                _service.AddChat(userId, chat);
+                return CreatedAtAction("GetContacts", chat);
+
+            }
+            return BadRequest();
+            
         }
 
 
