@@ -27,9 +27,9 @@ namespace Whatsapp_Clone_api.Controllers
         public ActionResult<List<Chat>> GetContacts()
         {
             var username = GetUserId();
-            if(username == null) { return BadRequest(); }
-            var chats= _service.GetChats(username);
-            if(chats == null) { return BadRequest(); }
+            if (username == null) { return BadRequest(); }
+            var chats = _service.GetChats(username);
+            if (chats == null) { return BadRequest(); }
             return Ok(chats);
 
         }
@@ -38,7 +38,7 @@ namespace Whatsapp_Clone_api.Controllers
         private string? GetUserId()
         {
             var token = User.Claims.FirstOrDefault(x => x.Type.ToString().Equals("UserId"));
-            if(token == null)
+            if (token == null)
             {
                 return null;
             }
@@ -50,7 +50,7 @@ namespace Whatsapp_Clone_api.Controllers
         public ActionResult Create([Bind("Id,Name,Server,Last,LastDate")] Chat chat)
         {
             var userId = GetUserId();
-            if(userId == null) { return BadRequest(); }
+            if (userId == null) { return BadRequest(); }
             if (ModelState.IsValid)
             {
                 if (_service.ChatExist(userId, chat.Id)) { return Conflict(); }
@@ -59,7 +59,18 @@ namespace Whatsapp_Clone_api.Controllers
 
             }
             return BadRequest();
-            
+
+        }
+
+        // GET: api/contacts/:id
+        [HttpGet(":{id}")]
+        public ActionResult<Chat> GetChat(string id)
+        {
+            var username = GetUserId();
+            if (username == null) { return BadRequest(); }
+            var chat = _service.GetChat(username,id);
+            if (chat == null) { return NotFound(); }
+            return Ok(chat);
         }
 
 
