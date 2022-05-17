@@ -47,7 +47,7 @@ namespace Whatsapp_Clone_api.Controllers
 
         // POST: api/contacts
         [HttpPost]
-        public ActionResult Create([Bind("Id,Name,Server")] Chat chat)
+        public ActionResult Create([Bind("Id,Name,Server,Last,LastDate")] Chat chat)
         {
             return Ok(chat);
         }
