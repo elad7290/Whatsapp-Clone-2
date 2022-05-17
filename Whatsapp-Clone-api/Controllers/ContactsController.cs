@@ -62,8 +62,9 @@ namespace Whatsapp_Clone_api.Controllers
 
         }
 
-        // GET: api/contacts/:id
-        [HttpGet(":{id}")]
+        // GET: api/contacts/id
+        [HttpGet("{id}")]
+        
         public ActionResult<Chat> GetChat(string id)
         {
             var username = GetUserId();
@@ -71,6 +72,19 @@ namespace Whatsapp_Clone_api.Controllers
             var chat = _service.GetChat(username,id);
             if (chat == null) { return NotFound(); }
             return Ok(chat);
+        }
+
+        // PUt: api/contacts/id
+        [HttpPut("{id}")]
+        public ActionResult<Chat> UpdateChat(string id,Chat chat)
+        {
+            var userId = GetUserId();
+            if (userId == null) { return BadRequest(); }
+            var current_chat = _service.GetChat(userId,id);
+            if(current_chat == null) { return NotFound(); }
+            current_chat.Name = chat.Name;
+            current_chat.Server = chat.Server;
+            return NoContent();
         }
 
 
