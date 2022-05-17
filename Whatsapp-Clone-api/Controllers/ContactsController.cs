@@ -47,10 +47,9 @@ namespace Whatsapp_Clone_api.Controllers
 
         // POST: api/contacts
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create()
+        public ActionResult Create([Bind("Id,Name,Server")] Chat chat)
         {
-            return Ok();
+            return Ok(chat);
         }
 
 
