@@ -92,6 +92,15 @@ namespace Services
             if(user == null) { return null; }
             return user.ActiveChats;
         }
+
+        public void DeleteChat(string username,string id)
+        {
+            User? user = Get(username);
+            if (user == null) { return; }
+            var chat = GetChat(username, id);
+            if (chat == null) { return; }
+            user.ActiveChats.Remove(chat);
+        }
     }
 }
 
