@@ -15,7 +15,6 @@ namespace Whatsapp_Clone_api.Controllers
 
         private UserService _service;
 
-
         public ContactsController(UserService service)
         {
             _service = service;
@@ -33,7 +32,6 @@ namespace Whatsapp_Clone_api.Controllers
             return Ok(chats);
 
         }
-
 
         private string? GetUserId()
         {
@@ -64,7 +62,6 @@ namespace Whatsapp_Clone_api.Controllers
 
         // GET: api/contacts/id
         [HttpGet("{id}")]
-        
         public ActionResult<Chat> GetChat(string id)
         {
             var username = GetUserId();
@@ -74,7 +71,7 @@ namespace Whatsapp_Clone_api.Controllers
             return Ok(chat);
         }
 
-        // PUt: api/contacts/id
+        // PUT: api/contacts/id
         [HttpPut("{id}")]
         public ActionResult UpdateChat(string id,Chat chat)
         {
@@ -86,8 +83,9 @@ namespace Whatsapp_Clone_api.Controllers
             current_chat.Server = chat.Server;
             return NoContent();
         }
+
         // DELETE: api/contacts/id
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public ActionResult DeleteChat(string id)
         {
             var userId = GetUserId();
