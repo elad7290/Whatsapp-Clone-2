@@ -26,8 +26,10 @@ namespace Domain
         //[Required]
         //public string Image { get; set; }
 
-        public List<Chat> ActiveChats { get; set; } = new List<Chat>();
+        //public List<Chat> ActiveChats { get; set; } = new List<Chat>();
 
-        public List<Message> AllMassages { get; set; } = new List<Message>();
+        //public List<Message> AllMassages { get; set; } = new List<Message>();
+
+        public Dictionary<Chat, List<Message>> Chats=new Dictionary<Chat, List<Message>>();
     }
 }

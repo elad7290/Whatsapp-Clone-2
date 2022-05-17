@@ -45,7 +45,7 @@ namespace Whatsapp_Clone_api.Controllers
 
         // POST: api/contacts
         [HttpPost]
-        public ActionResult Create([Bind("Id,Name,Server,Last,LastDate")] Chat chat)
+        public ActionResult AddChat([Bind("Id,Name,Server,Last,LastDate")] Chat chat)
         {
             var userId = GetUserId();
             if (userId == null) { return BadRequest(); }
@@ -95,6 +95,36 @@ namespace Whatsapp_Clone_api.Controllers
             _service.DeleteChat(userId,id);
             return NoContent();
         }
+
+        //GET: api/contacts/id/messages
+        [HttpGet("{id}/messages")]
+        public ActionResult<List<Message>> GetMessages(string id)
+        {
+            var userId = GetUserId();
+            if (userId == null) { return BadRequest(); }
+            List<Message>? messages = _service.GetMessages(userId,id);
+            if (messages!=null)
+            {
+                return Ok(messages);
+            }
+            return NotFound();
+        }
+
+
+        //POST:api/contacts/id/messages
+        [HttpPost("{id}/messages")]
+        public ActionResult AddMessage(string id, [Bind("Id,Content,Created,Sent")] Message message)
+        {
+            var userId = GetUserId();
+            if (userId == null) { return BadRequest(); }
+            if (ModelState.IsValid)
+            {
+                _service.AddMessage(userId, id, message);
+                return CreatedAtAction("GetMessages", message);
+
+            }
+            return BadRequest();
+        } 
 
 
 

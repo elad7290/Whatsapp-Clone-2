@@ -30,12 +30,22 @@ namespace Services
         {
             var user = Get(username);
             if (user == null) { return; }
+            if (!user.Chats.ContainsKey(chat))
+            {
+                user.Chats.Add(chat, new List<Message>());
+            }
 
-            user.ActiveChats.Add(chat);
+        }
+        public List<Chat>? GetChats(string username)
+        {
+            User? user = Get(username);
+            if (user == null) { return null; }
+            return user.Chats.Keys.ToList();
         }
 
         public Chat? GetChat(string username,string id)
         {
+
             var chats=GetChats(username);
             if (chats == null) { return null; }
             Chat? chat =chats.Where(c => c.Id == id).FirstOrDefault();
@@ -86,12 +96,7 @@ namespace Services
             return _users.FirstOrDefault(u => u.Username == username && u.Password==password) != null;
         }
 
-        public List<Chat>? GetChats(string username)
-        {
-            User? user = Get(username);
-            if(user == null) { return null; }
-            return user.ActiveChats;
-        }
+
 
         public void DeleteChat(string username,string id)
         {
@@ -99,7 +104,26 @@ namespace Services
             if (user == null) { return; }
             var chat = GetChat(username, id);
             if (chat == null) { return; }
-            user.ActiveChats.Remove(chat);
+            user.Chats.Remove(chat);
+        }
+
+        public List<Message>? GetMessages(string username, string id)
+        {
+            User? user = Get(username);
+            if (user == null) { return null; }
+            var chat = GetChat(username,id);
+            if(chat == null) { return null; }
+            return user.Chats[chat];
+        }
+
+        public void AddMessage(string username,string id,Message message)
+        {
+            var user = Get(username);
+            if (user == null) { return; }
+            var chat = GetChat(username, id);
+            if (chat == null) { return; }
+            user.Chats[chat].Add(message);
+
         }
     }
 }
