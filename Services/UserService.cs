@@ -91,12 +91,15 @@ namespace Services
             return _users;
         }
 
-        public bool UserExists(string username, string password)
+        public bool UserEntrace(string username, string password)
         {
             return _users.FirstOrDefault(u => u.Username == username && u.Password == password) != null;
         }
 
-
+        public bool UserExist(string username)
+        {
+            return _users.FirstOrDefault(u => u.Username == username) != null;
+        }
 
         public void DeleteChat(string username, string id)
         {

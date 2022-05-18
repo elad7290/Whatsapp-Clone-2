@@ -25,7 +25,7 @@ namespace Whatsapp_Clone_api.Controllers
         [HttpPost]
         public async Task<IActionResult> Entrace(string username, string password)
         {
-            if (_service.UserExists(username,password))
+            if (_service.UserEntrace(username,password))
             {
                 var claims = new[]
                 {
