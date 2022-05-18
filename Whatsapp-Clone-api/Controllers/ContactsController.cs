@@ -20,8 +20,17 @@ namespace Whatsapp_Clone_api.Controllers
             _service = service;
         }
 
+        private string? GetUserId()
+        {
+            var token = User.Claims.FirstOrDefault(x => x.Type.ToString().Equals("UserId"));
+            if (token == null)
+            {
+                return null;
+            }
+            return token.Value;
+        }
+
         // GET: api/contacts
-        //
         [HttpGet]
         public ActionResult<List<Chat>> GetContacts()
         {
@@ -31,16 +40,6 @@ namespace Whatsapp_Clone_api.Controllers
             if (chats == null) { return BadRequest(); }
             return Ok(chats);
 
-        }
-
-        private string? GetUserId()
-        {
-            var token = User.Claims.FirstOrDefault(x => x.Type.ToString().Equals("UserId"));
-            if (token == null)
-            {
-                return null;
-            }
-            return token.Value;
         }
 
         // POST: api/contacts
@@ -128,6 +127,7 @@ namespace Whatsapp_Clone_api.Controllers
             }
             return BadRequest();
         }
+
         //GET: api/contacts/id/messages/id2
         [HttpGet("{idChat}/messages/{idMessage}")]
         public ActionResult GetMessageById(string idChat, int idMessage)
@@ -154,6 +154,7 @@ namespace Whatsapp_Clone_api.Controllers
             current_message.Content = message.Content;
             return NoContent();
         }
+
         //DELETE: api/contacts/id/messages/id2
         [HttpDelete("{idChat}/messages/{idMessage}")]
         public ActionResult DeleteMessage(string idChat, int idMessage)

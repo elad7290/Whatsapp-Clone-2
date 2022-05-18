@@ -22,41 +22,12 @@ namespace Services
             }
 
         }
+
+        /************************ User **************************/
+
         public void Add(User user)
         {
             _users.Add(user);
-        }
-        public void AddChat(string username, Chat chat)
-        {
-            var user = Get(username);
-            if (user == null) { return; }
-            if (!user.Chats.ContainsKey(chat))
-            {
-                user.Chats.Add(chat, new List<Message>());
-            }
-
-        }
-        public List<Chat>? GetChats(string username)
-        {
-            User? user = Get(username);
-            if (user == null) { return null; }
-            return user.Chats.Keys.ToList();
-        }
-
-        public Chat? GetChat(string username, string id)
-        {
-
-            var chats = GetChats(username);
-            if (chats == null) { return null; }
-            Chat? chat = chats.Where(c => c.Id == id).FirstOrDefault();
-            if (chat == null) { return null; }
-            return chat;
-
-        }
-
-        public bool ChatExist(string username, string id)
-        {
-            return GetChat(username, id) != null;
         }
 
         public void Delete(string username)
@@ -65,14 +36,13 @@ namespace Services
             if (user == null) { return; }
             _users.Remove(user);
         }
+
         //someone else is changing the details
         public void Edit(User user)
         {
             var u = Get(user.Username);
             if (u == null) { return; }
             u.Nickname = user.Nickname;
-
-
         }
 
         public User? Get(string? username)
@@ -101,6 +71,42 @@ namespace Services
             return _users.FirstOrDefault(u => u.Username == username) != null;
         }
 
+        /************************ Chats **************************/
+
+        public void AddChat(string username, Chat chat)
+        {
+            var user = Get(username);
+            if (user == null) { return; }
+            if (!user.Chats.ContainsKey(chat))
+            {
+                user.Chats.Add(chat, new List<Message>());
+            }
+
+        }
+
+        public List<Chat>? GetChats(string username)
+        {
+            User? user = Get(username);
+            if (user == null) { return null; }
+            return user.Chats.Keys.ToList();
+        }
+
+        public Chat? GetChat(string username, string id)
+        {
+
+            var chats = GetChats(username);
+            if (chats == null) { return null; }
+            Chat? chat = chats.Where(c => c.Id == id).FirstOrDefault();
+            if (chat == null) { return null; }
+            return chat;
+
+        }
+
+        public bool ChatExist(string username, string id)
+        {
+            return GetChat(username, id) != null;
+        }
+
         public void DeleteChat(string username, string id)
         {
             User? user = Get(username);
@@ -109,6 +115,8 @@ namespace Services
             if (chat == null) { return; }
             user.Chats.Remove(chat);
         }
+
+        /************************ Message **************************/
 
         public List<Message>? GetMessages(string username, string id)
         {
