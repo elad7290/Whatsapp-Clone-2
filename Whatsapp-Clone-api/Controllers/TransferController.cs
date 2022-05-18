@@ -19,17 +19,17 @@ namespace Whatsapp_Clone_api.Controllers
 
         //POST: api/transfer
         [HttpPost]
-        public ActionResult Transfer(string from, string to, string content)
+        public ActionResult Transfer([Bind("from, to, content")] Transfer transfer )
         {
-            if(from == null || to == null || content == null) { return BadRequest(); }
-            if (!_service.UserExist(to))
+            if(transfer.From == null || transfer.To == null || transfer.Content == null) { return BadRequest(); }
+            if (!_service.UserExist(transfer.To))
             {
                 return NotFound();
             }           
-            if (_service.ChatExist(to, from))
+            if (_service.ChatExist(transfer.To, transfer.From))
             {
-                Message message = new Message() { Content = content, Created = DateTime.Now.ToString(), Sent = false };
-                _service.AddMessage(to, from, message);
+                Message message = new Message() { Content = transfer.Content, Created = DateTime.Now.ToString(), Sent = false };
+                _service.AddMessage(transfer.To, transfer.From, message);
                 return CreatedAtAction(nameof(Transfer), message);
             }
             return BadRequest();

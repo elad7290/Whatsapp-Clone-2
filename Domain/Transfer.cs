@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class Invitation
+    public  class Transfer
     {
         public string From { get; set; }
 
         public string To { get; set; }
 
-        public string Server { get; set; }
+        public string Content { get; set; }
+
     }
 }
