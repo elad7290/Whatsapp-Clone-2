@@ -14,8 +14,8 @@ namespace Domain
 
         public string Server { get; set; }
 
-        public string? Last { get; set; }
+        public string? Last { get; set; }=null;
 
-        public string? LastDate { get; set; }
+        public string? LastDate { get; set; } = null;
     }
 }
