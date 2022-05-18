@@ -111,7 +111,7 @@ namespace Whatsapp_Clone_api.Controllers
         }
 
 
-        //POST:api/contacts/id/messages
+        //POST: api/contacts/id/messages
         [HttpPost("{id}/messages")]
         public ActionResult AddMessage(string id, [Bind("Id,Content,Created,Sent")] Message message)
         {
@@ -127,6 +127,45 @@ namespace Whatsapp_Clone_api.Controllers
 
             }
             return BadRequest();
-        } 
+        }
+        //GET: api/contacts/id/messages/id2
+        [HttpGet("{idChat}/messages/{idMessage}")]
+        public ActionResult GetMessageById(string idChat, int idMessage)
+        {
+            var userId = GetUserId();
+            if (userId == null) { return BadRequest(); }
+            var message = _service.GetMessageById(userId, idChat, idMessage);
+            if (message != null)
+            {
+                return Ok(message);
+            }
+            return NotFound();
+        }
+
+        //PUT: api/contacts/id/messages/id2
+        [HttpPut("{idChat}/messages/{idMessage}")] 
+        public ActionResult EditMessage(string idChat, int idMessage,Message message)
+        {
+            var userId = GetUserId();
+            if (userId == null) { return BadRequest(); }
+            var current_message = _service.GetMessageById(userId, idChat, idMessage);
+         
+            if (current_message == null) { return NotFound(); }
+            current_message.Content = message.Content;
+            return NoContent();
+        }
+        //DELETE: api/contacts/id/messages/id2
+        [HttpDelete("{idChat}/messages/{idMessage}")]
+        public ActionResult DeleteMessage(string idChat, int idMessage)
+        {
+            var userId = GetUserId();
+            if (userId == null) { return BadRequest(); }
+            var message = _service.GetMessageById(userId, idChat, idMessage);
+            if (message == null) { return NotFound(); }
+            _service.DeleteMessage(userId, idChat, idMessage);
+            return NoContent();
+        }
+
+
     }
 }

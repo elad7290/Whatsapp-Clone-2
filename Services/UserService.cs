@@ -127,6 +127,32 @@ namespace Services
             user.Chats[chat].Add(message);
 
         }
+
+        public Message? GetMessageById(string username, string idChat,int idMessage)
+        {
+            var user = Get(username);
+            if (user == null) { return null; }
+            var chat = GetChat(username,idChat);
+            if (chat == null) { return null; }
+            var message= user.Chats[chat].FirstOrDefault(m=> m.Id==idMessage);
+            if(message== null) { return null; }
+            return message;
+
+        }
+
+        public void DeleteMessage(string username, string idChat,int idMessage)
+        {
+            User? user = Get(username);
+            if (user == null) { return; }
+            var chat = GetChat(username, idChat);
+            if (chat == null) { return; }
+            var message = GetMessageById(username, idChat, idMessage);
+            if (message == null) { return; }
+            user.Chats[chat].Remove(message);
+            
+        }
+
+
     }
 }
 
