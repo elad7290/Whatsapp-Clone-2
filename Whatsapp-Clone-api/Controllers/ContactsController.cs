@@ -117,6 +117,7 @@ namespace Whatsapp_Clone_api.Controllers
             if (userId == null) { return BadRequest(); }
             if (ModelState.IsValid)
             {
+                message.Created = DateTime.Now.ToString();
                 if (_service.ChatExist(userId, id))
                 {
                     _service.AddMessage(userId, id, message);
