@@ -109,7 +109,6 @@ namespace Whatsapp_Clone_api.Controllers
             return NotFound();
         }
 
-
         //POST: api/contacts/id/messages
         [HttpPost("{id}/messages")]
         public ActionResult AddMessage(string id, [Bind("Id,Content,Created,Sent")] Message message)

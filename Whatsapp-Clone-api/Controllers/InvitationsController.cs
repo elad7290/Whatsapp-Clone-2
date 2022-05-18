@@ -18,15 +18,15 @@ namespace Whatsapp_Clone_api.Controllers
 
         //POST: api/invitations
         [HttpPost]
-        public ActionResult Invitations(string from, string to, string server)
+        public ActionResult Invitations([Bind("from, to, server")] Invitation invite)
         {
-            if (from == null || to == null || server == null) { return BadRequest(); }
-            if (!_service.UserExist(to))
+            if (invite.from == null || invite.to == null || invite.server == null) { return BadRequest(); }
+            if (!_service.UserExist(invite.to))
             {
                 return NotFound();
             }
-            Chat chat = new Chat() { Id = from, Name = from, Server = server };
-            _service.AddChat(to, chat);
+            Chat chat = new Chat() { Id = invite.from, Name = invite.from, Server = invite.server };
+            _service.AddChat(invite.to, chat);
             return CreatedAtAction(nameof(Invitations), chat);
         }
 
