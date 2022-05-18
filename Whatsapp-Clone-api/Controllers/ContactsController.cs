@@ -128,10 +128,5 @@ namespace Whatsapp_Clone_api.Controllers
             }
             return BadRequest();
         } 
-
-
-
-
-
     }
 }

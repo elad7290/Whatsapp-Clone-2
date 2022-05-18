@@ -18,15 +18,15 @@ namespace Services
             if (_users.Count == 0)
             {
                 User user = new User() { Username = "Lion", Nickname = "lio", Password = "1" };
-                _users.Add(user); 
+                _users.Add(user);
             }
-                    
+
         }
         public void Add(User user)
         {
             _users.Add(user);
         }
-        public void AddChat(string username,Chat chat)
+        public void AddChat(string username, Chat chat)
         {
             var user = Get(username);
             if (user == null) { return; }
@@ -43,12 +43,12 @@ namespace Services
             return user.Chats.Keys.ToList();
         }
 
-        public Chat? GetChat(string username,string id)
+        public Chat? GetChat(string username, string id)
         {
 
-            var chats=GetChats(username);
+            var chats = GetChats(username);
             if (chats == null) { return null; }
-            Chat? chat =chats.Where(c => c.Id == id).FirstOrDefault();
+            Chat? chat = chats.Where(c => c.Id == id).FirstOrDefault();
             if (chat == null) { return null; }
             return chat;
 
@@ -71,8 +71,8 @@ namespace Services
             var u = Get(user.Username);
             if (u == null) { return; }
             u.Nickname = user.Nickname;
-            
-           
+
+
         }
 
         public User? Get(string? username)
@@ -91,14 +91,14 @@ namespace Services
             return _users;
         }
 
-        public bool UserExists(string username,string password)
+        public bool UserExists(string username, string password)
         {
-            return _users.FirstOrDefault(u => u.Username == username && u.Password==password) != null;
+            return _users.FirstOrDefault(u => u.Username == username && u.Password == password) != null;
         }
 
 
 
-        public void DeleteChat(string username,string id)
+        public void DeleteChat(string username, string id)
         {
             User? user = Get(username);
             if (user == null) { return; }
@@ -111,8 +111,8 @@ namespace Services
         {
             User? user = Get(username);
             if (user == null) { return null; }
-            var chat = GetChat(username,id);
-            if(chat == null) { return null; }
+            var chat = GetChat(username, id);
+            if (chat == null) { return null; }
             return user.Chats[chat];
         }
 
@@ -122,8 +122,7 @@ namespace Services
             if (user == null) { return; }
             var chat = GetChat(username, id);
             if (chat == null) { return; }
-            //var maxValueKey = user.Chats.Aggregate((x, y) => x. > y.Key ? x : y).Key;
-            int nextId = user.Chats.Values.Max(c => c.Max(m=> m.Id)) + 1;
+            int nextId = user.Chats.Values.Max(c => { if (c.Count > 0) { return c.Max(m => m.Id) + 1; } else { return 0;} });
             message.Id = nextId; 
             user.Chats[chat].Add(message);
 
