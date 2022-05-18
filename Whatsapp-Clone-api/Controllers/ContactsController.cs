@@ -44,7 +44,7 @@ namespace Whatsapp_Clone_api.Controllers
 
         // POST: api/contacts
         [HttpPost]
-        public ActionResult AddChat([Bind("Id,Name,Server,Last,LastDate")] Chat chat)
+        public ActionResult AddChat([Bind("Id,Name,Server")] Chat chat)
         {
             var userId = GetUserId();
             if (userId == null) { return BadRequest(); }
