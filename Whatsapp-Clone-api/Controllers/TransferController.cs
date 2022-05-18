@@ -5,7 +5,7 @@ using Domain;
 
 namespace Whatsapp_Clone_api.Controllers
 {
-    [Route("api/[transfer]")]
+    [Route("api/transfer")]
     [ApiController]
     public class TransferController : ControllerBase
     {
