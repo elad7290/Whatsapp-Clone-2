@@ -116,12 +116,15 @@ namespace Services
             return user.Chats[chat];
         }
 
-        public void AddMessage(string username,string id,Message message)
+        public void AddMessage(string username, string id, Message message)
         {
             var user = Get(username);
             if (user == null) { return; }
             var chat = GetChat(username, id);
             if (chat == null) { return; }
+            //var maxValueKey = user.Chats.Aggregate((x, y) => x. > y.Key ? x : y).Key;
+            int nextId = user.Chats.Values.Max(c => c.Max(m=> m.Id)) + 1;
+            message.Id = nextId; 
             user.Chats[chat].Add(message);
 
         }
