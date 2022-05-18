@@ -134,7 +134,8 @@ namespace Services
             var chat = GetChat(username, id);
             if (chat == null) { return; }
             int nextId = user.Chats.Values.Max(c => { if (c.Count > 0) { return c.Max(m => m.Id) + 1; } else { return 0;} });
-            message.Id = nextId; 
+            message.Id = nextId;
+            message.Created = DateTime.Now.ToString();
             user.Chats[chat].Add(message);
             chat.Last = message.Content;
             chat.LastDate = message.Created;
