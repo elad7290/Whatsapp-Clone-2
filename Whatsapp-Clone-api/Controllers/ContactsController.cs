@@ -130,7 +130,7 @@ namespace Whatsapp_Clone_api.Controllers
 
         //GET: api/contacts/id/messages/id2
         [HttpGet("{idChat}/messages/{idMessage}")]
-        public ActionResult GetMessageById(string idChat, int idMessage)
+        public ActionResult<Message> GetMessageById(string idChat, int idMessage)
         {
             var userId = GetUserId();
             if (userId == null) { return BadRequest(); }
