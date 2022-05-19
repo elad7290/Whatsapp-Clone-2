@@ -28,7 +28,7 @@ namespace Services
 
                 ////user num 2 ////
                 User user2 = new User() { Username = "tiger", Nickname = "ty", Password = "1" };
-                _users.Add(user);
+                _users.Add(user2);
                 Chat chat2 = new Chat() { Id = "Lion", Name = "Lio", Server = "localhost:7079" };
                 Message message2 = new Message() { Id = 0, Content = "hi", Created = DateTime.Now.ToString(), Sent = false };
                 chat2.Last = message2.Content;
