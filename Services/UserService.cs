@@ -104,7 +104,7 @@ namespace Services
         {
             User? user = Get(username);
             if (user == null) { return null; }
-            return user.Chats.Keys.OrderBy(c => c.LastDate).ToList();
+            return user.Chats.Keys.OrderByDescending(c => c.LastDate).ToList();
         }
 
         public Chat? GetChat(string username, string id)
