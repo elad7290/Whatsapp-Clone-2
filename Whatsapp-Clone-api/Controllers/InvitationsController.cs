@@ -25,8 +25,11 @@ namespace Whatsapp_Clone_api.Controllers
             {
                 return NotFound();
             }
-            Chat chat = new Chat() { Id = invite.From, Name = invite.From, Server = invite.Server };
-            _service.AddChat(invite.To, chat);
+            Chat? chat = null;
+            if (!_service.ChatExist(invite.To, invite.From)) {
+                chat = new Chat() { Id = invite.From, Name = invite.From, Server = invite.Server };
+                _service.AddChat(invite.To, chat);
+            }
             return CreatedAtAction(nameof(Invitations), chat);
         }
 
