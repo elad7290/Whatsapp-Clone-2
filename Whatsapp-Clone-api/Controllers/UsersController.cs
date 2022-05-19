@@ -10,7 +10,7 @@ namespace Whatsapp_Clone_api.Controllers
     public class UsersController : ControllerBase
     {
         //GET: api/Users/UserId
-        [HttpGet]
+        [HttpGet("UserId")]
         public ActionResult<string> GetUserId()
         {
             var token = User.Claims.FirstOrDefault(x => x.Type.ToString().Equals("UserId"));
