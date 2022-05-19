@@ -19,6 +19,12 @@ namespace Services
             {
                 User user = new User() { Username = "Lion", Nickname = "lio", Password = "1" };
                 _users.Add(user);
+                Chat chat = new Chat() { Id = "alice", Name = "alice", Server = "localhost:7079" };
+                Message message = new Message() { Id = 0, Content = "hi", Created = DateTime.Now.ToString(), Sent = false };
+                chat.Last = message.Content;
+                chat.LastDate = message.Created;
+                user.Chats.Add(chat, new List<Message>());
+                user.Chats[chat].Add(message);
             }
 
         }

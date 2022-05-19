@@ -18,7 +18,7 @@ namespace Whatsapp_Clone_api.Controllers
 
 
         [HttpPost]
-        public ActionResult Register([Bind("Username,Nickname,Password")] User user)
+        public ActionResult<User> Register([Bind("Username,Nickname,Password")] User user)
         {
             if (user == null) { return BadRequest(); }
             if (_service.UserExist(user.Username)) { return BadRequest(); }
