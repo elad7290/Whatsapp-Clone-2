@@ -9,7 +9,7 @@ namespace Whatsapp_Clone_api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        //GET: api/Users
+        //GET: api/Users/UserId
         [HttpGet]
         public ActionResult<string> GetUserId()
         {
