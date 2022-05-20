@@ -29,12 +29,12 @@ namespace Services
                 ////user num 2 ////
                 User user2 = new User() { Username = "tiger", Nickname = "ty", Password = "1" };
                 _users.Add(user2);
-                Chat chat2 = new Chat() { Id = "Lion", Name = "Lio", Server = "localhost:7097" };
+                /*Chat chat2 = new Chat() { Id = "Lion", Name = "Lio", Server = "localhost:7097" };
                 Message message2 = new Message() { Id = 0, Content = "hi", Created = DateTime.Now.ToString(), Sent = false };
                 chat2.Last = message2.Content;
                 chat2.LastDate = message2.Created;
                 user2.Chats.Add(chat2, new List<Message>());
-                user2.Chats[chat2].Add(message2);
+                user2.Chats[chat2].Add(message2);*/
             }
 
         }
