@@ -17,26 +17,13 @@ namespace Services
             //delete Meeeeeeee
             if (_users.Count == 0)
             {
+                // user 1: Lion
                 User user = new User() { Username = "Lion", Nickname = "lio", Password = "1" };
                 _users.Add(user);
-                Chat chat = new Chat() { Id = "alice", Name = "alice", Server = "localhost:7079" };
-                Message message = new Message() { Id = 0, Content = "hi", Created = DateTime.Now.ToString(), Sent = false };
-                chat.Last = message.Content;
-                chat.LastDate = message.Created;
-                user.Chats.Add(chat, new List<Message>());
-                user.Chats[chat].Add(message);
-
-                ////user num 2 ////
-                User user2 = new User() { Username = "tiger", Nickname = "ty", Password = "1" };
+                // user 2: Tiger
+                User user2 = new User() { Username = "Tiger", Nickname = "ty", Password = "1" };
                 _users.Add(user2);
-                /*Chat chat2 = new Chat() { Id = "Lion", Name = "Lio", Server = "localhost:7097" };
-                Message message2 = new Message() { Id = 0, Content = "hi", Created = DateTime.Now.ToString(), Sent = false };
-                chat2.Last = message2.Content;
-                chat2.LastDate = message2.Created;
-                user2.Chats.Add(chat2, new List<Message>());
-                user2.Chats[chat2].Add(message2);*/
             }
-
         }
 
         /************************ User **************************/
