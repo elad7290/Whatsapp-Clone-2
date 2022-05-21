@@ -32,15 +32,26 @@ builder.Services.AddTransient<UserService>();
 builder.Services.AddSingleton<List<User>>();
 builder.Services.AddSignalR();
 
-builder.Services.AddCors(options =>
+/*builder.Services.AddCors(options =>
 {
     options.AddPolicy("Allow All",
         builder =>
         {
-            builder.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader();
+        builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
         });
+});*/
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:3000")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    });
 });
 
 var app = builder.Build();
@@ -51,7 +62,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors("Allow All");
+/*app.UseCors("Allow All");
+*/
+app.UseCors();
 
 app.UseHttpsRedirection();
 
@@ -59,6 +72,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapHub<ChatHub>("/chatsHub");
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();
