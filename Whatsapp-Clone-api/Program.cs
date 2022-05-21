@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Services;
 using System.Text;
+using Whatsapp_Clone_api.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 builder.Services.AddTransient<UserService>();
 builder.Services.AddSingleton<List<User>>();
+builder.Services.AddSignalR();
 
 builder.Services.AddCors(options =>
 {
@@ -56,5 +58,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<ChatsHub>("/chatsHub");
 
 app.Run();
