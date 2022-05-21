@@ -8,5 +8,10 @@ namespace Whatsapp_Clone_api.Hubs
         {
             await Clients.All.SendAsync("LoadMessages", content);
         }
+
+        public async Task UpdateChats()
+        {
+            await Clients.All.SendAsync("LoadChats");
+        }
     }
 }
