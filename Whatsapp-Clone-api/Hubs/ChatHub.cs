@@ -4,9 +4,9 @@ namespace Whatsapp_Clone_api.Hubs
 {
     public class ChatHub: Hub
     {
-        public async Task UpdateMessages()
+        public async Task UpdateMessages(string from, string to, string content)
         {
-            Console.WriteLine("hi chen");
+            await Clients.All.SendAsync("LoadMessages", content);
         }
     }
 }
